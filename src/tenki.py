@@ -173,7 +173,6 @@ def get_weather_data(filepath, area_num, point_num, from_, to_, freq="daily"):
     df_lst = []
     for d in pd.date_range(from_, adjusted_to_, freq=f):
         url = url_base.format(d.year, d.month, d.day)
-        print(url)
         soup = BeautifulSoup(requests.get(url).content, "lxml")
         table = soup.find("table", class_="data2_s")
         if table:
