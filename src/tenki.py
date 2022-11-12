@@ -200,10 +200,41 @@ def get_weather_data(filepath, area_num, point_num, from_, to_, freq="daily"):
     df[from_: to_].to_csv(filepath, index=False)
 
 
-def _dms2deg(h, m, s=0):
-    """度分秒から度への変換"""
-    deg = float(h) + float(m) / 60 + float(s) / 3600
-    return deg
+def _get_area_nums():
+    map_url = URL + "/obd/stats/etrn/select/prefecture00.php"
+    res = requests.get(map_url)
+    soup = BeautifulSoup(res.content, "lxml")
+
+    areas = {}
+    ptn = re.compile(r"^.+?prec_no=(\d+?)\&.+?$")
+    for i in soup.find_all("area"):
+        k = i.get("alt")
+        match = ptn.match(i.get("href"))
+        if match:
+            areas[k] = int(match.group(1))
+        else:
+            areas[k] = None
+
+    return areas
+
+
+def _get_point_info(area_num):
+    url_base = URL + "/obd/stats/etrn/select/prefecture.php?prec_no={}"
+    url = url_base.format(area_num)
+
+    res = requests.get(url)
+    soup = BeautifulSoup(res.content, "lxml")
+
+    areas = soup.find_all("area", attrs={"onmouseover": True})
+    points = []
+    hrefs = []  # 同じ地点の情報が2つあるため"href"で取得済みを検知する
+    for a in areas:
+        href = a.get("href")
+        if href not in hrefs:
+            hrefs.append(href)
+            points.append(_parse_point_info(a))
+
+    return points
 
 
 def _parse_point_info(area_tag):
@@ -247,38 +278,7 @@ def _parse_point_info(area_tag):
     return point
 
 
-def _get_area_nums():
-    map_url = URL + "/obd/stats/etrn/select/prefecture00.php"
-    res = requests.get(map_url)
-    soup = BeautifulSoup(res.content, "lxml")
-
-    areas = {}
-    ptn = re.compile(r"^.+?prec_no=(\d+?)\&.+?$")
-    for i in soup.find_all("area"):
-        k = i.get("alt")
-        match = ptn.match(i.get("href"))
-        if match:
-            areas[k] = int(match.group(1))
-        else:
-            areas[k] = None
-
-    return areas
-
-
-def _get_point_info(area_num):
-    url_base = URL + "/obd/stats/etrn/select/prefecture.php?prec_no={}"
-    url = url_base.format(area_num)
-
-    res = requests.get(url)
-    soup = BeautifulSoup(res.content, "lxml")
-
-    areas = soup.find_all("area", attrs={"onmouseover": True})
-    points = []
-    hrefs = []  # 同じ地点の情報が2つあるため"href"で取得済みを検知する
-    for a in areas:
-        href = a.get("href")
-        if href not in hrefs:
-            hrefs.append(href)
-            points.append(_parse_point_info(a))
-
-    return points
+def _dms2deg(h, m, s=0):
+    """度分秒から度への変換"""
+    deg = float(h) + float(m) / 60 + float(s) / 3600
+    return deg
