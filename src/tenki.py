@@ -133,7 +133,6 @@ def get_point_data(filepath):
     df = pd.DataFrame(points)
     df.fillna(np.nan, inplace=True)  # None to np.nan
     df.replace({}, np.nan, inplace=True)  # {} to np.nan
-    df.to_csv("check.csv")
     df["obs_from"] = pd.to_datetime(df["obs_from"])
     # add area name column
     tmp_dic = {v: k for k, v in areas.items()}
