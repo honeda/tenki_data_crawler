@@ -159,7 +159,7 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
     """
     if freq == "daily":
         f = "1M"
-        adjusted_to_ = to_ + datetime.timedelta(days=31)
+        adjusted_to_ = to_ + datetime.timedelta(days=30)
     elif freq == "hourly":
         f = "1D"
         adjusted_to_ = to_ + datetime.timedelta(days=1)
