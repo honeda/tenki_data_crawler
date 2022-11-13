@@ -159,17 +159,17 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
     """
     if freq == "daily":
         f = "1M"
-        adjusted_to_ = to_ + datetime.timedelta(days=30)
+        td = datetime.timedelta(days=30)
     elif freq == "hourly":
         f = "1D"
-        adjusted_to_ = to_ + datetime.timedelta(days=1)
+        td = datetime.timedelta(days=1)
     else:
         raise Exception(f"'freq' must be 'daily' or 'hourly'. passed {freq}")
 
     url_base = (f"https://www.data.jma.go.jp/obd/stats/etrn/view/{freq}_s1.php?"
                 f"prec_no={area_num}&block_no={point_num}" + "&year={}&month={}&day={}&view=")
     df_lst = []
-    for d in pd.date_range(from_, adjusted_to_, freq=f):
+    for d in pd.date_range(from_, to_ + td, freq=f):
         url = url_base.format(d.year, d.month, d.day)
         soup = BeautifulSoup(requests.get(url).content, "lxml")
         table = soup.find("table", class_="data2_s")
