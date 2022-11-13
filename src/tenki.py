@@ -197,7 +197,6 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
 
 
 def _cleanup_weather_df(df):
-    df.replace("--", np.nan, inplace=True)
     # 降水量"1.5" の場合に"1.5 )" のようになっている場合があるので修正.
     # これによって正しい用法で")"が使われていた際に")"がなくなるリスクがある.
     evil_word = ")"
@@ -207,6 +206,9 @@ def _cleanup_weather_df(df):
         ),
         axis=0
     )
+    # 欠損値を"--"で表している場合がある. evil_wordの変換の後に行う必要有り
+    df.replace("--", np.nan, inplace=True)
+
     return df
 
 
