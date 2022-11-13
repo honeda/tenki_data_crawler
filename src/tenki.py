@@ -90,13 +90,11 @@ class ObservationPoint(dict):
         }
 
 
-def get_point_data(filepath):
+def get_point_data():
     """気象庁の観測地点の情報をまとめたDataFrameを取得する.
     多くのページのスクレイピングを行うので時間がかかる.
     一度DataFrameを作成して保存すれば良いので何度も使う必要はない.
 
-    Args:
-        filepath (str): 保存するファイルのパス
     Return:
         DataFrame
 
@@ -146,12 +144,11 @@ def get_point_data(filepath):
     return df
 
 
-def get_weather_data(filepath, area_num, point_num, from_, to_, freq="daily"):
+def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
     """観測データを気象庁のHPから取得し、DataFrameで返す.
     取得期間、サンプリングレートによっては時間がかかるので注意.
 
     Args:
-        filepath (str): 保存するファイルのパス
         area_num (int): 地域が属する都道府県に割り当てられた数値
         point_num (int): 地域に割り当てられた数値
         from_ (datetime): 取得開始日
