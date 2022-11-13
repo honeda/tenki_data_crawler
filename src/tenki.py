@@ -97,6 +97,8 @@ def get_point_data(filepath):
 
     Args:
         filepath (str): 保存するファイルのパス
+    Return:
+        DataFrame
 
     Note:
         --- COLUMNS INFORMATION ---
@@ -141,7 +143,7 @@ def get_point_data(filepath):
     # add prefecture column. (for Hokkaido)
     df.insert(1, "pref_name", [i if i not in HOKKAIDO else "北海道" for i in tmp_lst])
 
-    df.to_csv(filepath, index=False)
+    return df
 
 
 def get_weather_data(filepath, area_num, point_num, from_, to_, freq="daily"):
@@ -196,7 +198,7 @@ def get_weather_data(filepath, area_num, point_num, from_, to_, freq="daily"):
     )
     df.set_index("date", inplace=True)
 
-    df[from_: to_].to_csv(filepath, index=False)
+    return df[from_:to_]
 
 
 def _get_area_nums():
