@@ -208,7 +208,7 @@ def _cleanup_weather_df(df):
     Note:
         処理内容.
         参考: https://www.data.jma.go.jp/obd/stats/data/mdrr/man/remark.html
-        * データが"--"の場合は欠損値とする.
+        * データが"--"の場合は0とする.
         * 末尾に")"が付いているものは")"を外してそのまま使う.
         * 末尾に"]"が付いているものは欠損値とする.
         * データが"×"の場合は欠損値とする.
@@ -232,7 +232,7 @@ def _cleanup_weather_df(df):
         )
 
     # "-- )" のような場合もあるので最後に実施
-    df.replace("--", np.nan, inplace=True)
+    df.replace("--", 0, inplace=True)
 
     return df
 
