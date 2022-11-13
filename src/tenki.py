@@ -198,16 +198,41 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
 
 
 def _cleanup_weather_df(df):
-    # 降水量"1.5" の場合に"1.5 )" のようになっている場合があるので修正.
-    # これによって正しい用法で")"が使われていた際に")"がなくなるリスクがある.
-    evil_word = ")"
+    """天候データの欠損値処理などを行う.
+
+    Args:
+        df (dataframe): 天候データのdataframe.
+
+    Returns:
+        dataframe: 処理済みのdataframe.
+
+    Note:
+        処理内容.
+        参考: https://www.data.jma.go.jp/obd/stats/data/mdrr/man/remark.html
+        * データが"--"の場合は欠損値とする.
+        * 末尾に")"が付いているものは")"を外してそのまま使う.
+        * 末尾に"]"が付いているものは欠損値とする.
+        * データが"×"の場合は欠損値とする.
+        * データが"////"の場合は欠損値とする.
+        * データが"#"の場合は欠損値とする.
+        * 末尾に"*"が付いているものは実際に見つけていないのでとりあえずそのままにする.
+    """
+    w = ")"
     df = df.apply(
         lambda x: x.apply(
-            lambda y: y.replace(evil_word, "").strip() if type(y) == str else y
+            lambda y: y.replace(w, "").strip() if type(y) == str else y
         ),
         axis=0
     )
-    # 欠損値を"--"で表している場合がある. evil_wordの変換の後に行う必要有り
+    for w in "] × //// #".split():
+        df = df.apply(
+            lambda x: x.apply(
+                lambda y: np.nan if (type(y) == str) and (w in y) else y
+            ),
+            axis=0
+        )
+
+    # "-- )" のような場合もあるので最後に実施
     df.replace("--", np.nan, inplace=True)
 
     return df
