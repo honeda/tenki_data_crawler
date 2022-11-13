@@ -202,7 +202,6 @@ def _cleanup_weather_df(df):
 
     Args:
         df (dataframe): 天候データのdataframe.
-
     Returns:
         dataframe: 処理済みのdataframe.
 
