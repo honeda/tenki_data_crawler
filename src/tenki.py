@@ -203,7 +203,7 @@ def _cleanup_weather_df(df):
     evil_word = ")"
     df = df.apply(
         lambda x: x.apply(
-            lambda y: y.replace(evil_word, "").strip() if type(y) == str and evil_word in y else y
+            lambda y: y.replace(evil_word, "").strip() if type(y) == str else y
         ),
         axis=0
     )
