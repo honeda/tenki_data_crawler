@@ -247,7 +247,7 @@ def _parse_point_info(area_tag):
         point
     """
     str_ = area_tag.get("onmouseover")
-    g = re.match(r"^javascript:viewPoint\(" + "'(.*?)'," * 22 + "'(.*?)'\);$", str_).groups()
+    g = re.match(r"^javascript:viewPoint\(" + "'(.*?)'," * 22 + r"'(.*?)'\);$", str_).groups()
 
     point = ObservationPoint()
     point.symbol = g[0]
