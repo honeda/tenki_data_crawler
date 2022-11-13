@@ -181,15 +181,16 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
             else:
                 dates = [datetime.datetime(d.year, d.month, d.day, i - 1) for i in tdf.iloc[:, 0]]
             tdf.iloc[:, 0] = dates
+            tdf.insert(1, "point_num", point_num)  # 観測地点番号を追加
+            # Multi-columnになっているのでリセットして新しい列名を与える.
+            tdf = pd.DataFrame(
+                tdf.values,
+                columns=DAILY_DATA_COLS if freq == "daily" else HOURLY_DATA_COLS
+            )
             df_lst.append(tdf)
         time.sleep(ACCESS_INTERVAL)
 
     df = pd.concat(df_lst)
-    df.insert(1, "point_num", point_num)
-    df = pd.DataFrame(
-        df.values,
-        columns=DAILY_DATA_COLS if freq == "daily" else HOURLY_DATA_COLS
-    )
     df = _cleanup_weather_df(df)
     df.set_index("date", inplace=True)
 
