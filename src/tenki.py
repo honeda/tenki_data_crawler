@@ -177,13 +177,10 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
             tdf = pd.read_html(str(table))[0]
             # to datetime
             if freq == "daily":
-                tdf.iloc[:, 0] = [
-                    datetime.datetime(d.year, d.month, i) for i in tdf.iloc[:, 0]
-                ]
+                dates = [datetime.datetime(d.year, d.month, i) for i in tdf.iloc[:, 0]]
             else:
-                tdf.iloc[:, 0] = [
-                    datetime.datetime(d.year, d.month, d.day, i - 1) for i in tdf.iloc[:, 0]
-                ]
+                dates = [datetime.datetime(d.year, d.month, d.day, i - 1) for i in tdf.iloc[:, 0]]
+            tdf.iloc[:, 0] = dates
             df_lst.append(tdf)
         time.sleep(ACCESS_INTERVAL)
 
