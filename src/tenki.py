@@ -190,9 +190,24 @@ def get_weather_data(area_num, point_num, from_, to_, freq="daily"):
         df.values,
         columns=DAILY_DATA_COLS if freq == "daily" else HOURLY_DATA_COLS
     )
+    df = _cleanup_weather_df(df)
     df.set_index("date", inplace=True)
 
     return df[from_:to_]
+
+
+def _cleanup_weather_df(df):
+    df.replace("--", np.nan, inplace=True)
+    # 降水量"1.5" の場合に"1.5 )" のようになっている場合があるので修正.
+    # これによって正しい用法で")"が使われていた際に")"がなくなるリスクがある.
+    evil_word = ")"
+    df = df.apply(
+        lambda x: x.apply(
+            lambda y: y.replace(evil_word, "").strip() if type(y) == str and evil_word in y else y
+        ),
+        axis=0
+    )
+    return df
 
 
 def _get_area_nums():
