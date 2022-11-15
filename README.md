@@ -12,8 +12,6 @@
   * [気象庁HP robots.txt](https://www.jma.go.jp/robots.txt)
   * [気象庁HP 利用規約](https://www.jma.go.jp/jma/kishou/info/coment.html)
 
-<br>
-
 * このプログラムはサイトへのアクセス頻度を1回/1秒になるようにしていますが、同時に複数のプロセスで動かす場合などは大量にアクセスしてしまう可能性があるので注意してください。
 
 * 対象のデータが膨大であるため、このプログラムで全観測地点、全期間のデータが問題なく取得できることは確認できていません。  
@@ -99,7 +97,6 @@ $ python main.py {開始日} {終了日} --area {観測エリア名}
     | obs_snowfall        | int      | 降雪量の観測をしているか                                            |
     | obs_from            | datetime | 観測開始日. 入力されていない場合も多い                              |
     | name_change_history | str      | 地域名が変わったことがあるか                                        |
-    |                     |          |                                                                     |
 
 2. `weather_point~~~.csv`  
   ある観測地点の指定した期間の天気データをまとめたcsvファイルです。  
@@ -110,7 +107,7 @@ $ python main.py {開始日} {終了日} --area {観測エリア名}
    | date                       | datetime | 日付                         |
    | point_num                  | int      | 観測地点に割り当てられた数値 |
    | atm_onsite                 | float    | 現地の気圧 [hPa]             |
-   | atm_sea_level              | float    | 海面の気圧 [mm]              |
+   | atm_sea_level              | float    | 海面の気圧 [hPa]             |
    | precip_total               | float    | 合計降水量 [mm]              |
    | precip_max_1h              | float    | 1時間の最大降水量 [mm]       |
    | precip_max_10m             | float    | 10分間の最大降水量 [mm]      |
@@ -129,7 +126,6 @@ $ python main.py {開始日} {終了日} --area {観測エリア名}
    | deepest_snow               | float    | 最深積雪 [cm]                |
    | general_cond_daytime       | str      | 天気概況（昼）               |
    | general_cond_nighttime     | str      | 天気概況（夜）               |
-   |                            |          |                              |
 
 <br>
 
