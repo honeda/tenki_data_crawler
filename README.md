@@ -78,25 +78,25 @@ $ python main.py {開始日} {終了日} --area {観測エリア名}
   観測地点の情報をまとめたcsvファイルです。このファイルがすでに存在する場合は保存処理をスキップします。  
   下記のカラムで構成されており、分析など行う場合はこのデータと天気データを組み合わせて使うことになると思います。  
 
-    |       カラム名        |    型    |                                  意味                                  |
-    | --------------------- | -------- | ---------------------------------------------------------------------- |
-    | symbol              | str      | "s" or "a", 大きい都市だと"s"になる模様                                |
-    | prec_num            | int      | 観測地点が属する都道府県に割り当てられた数値                           |
-    | point_num           | int      | 観測地点に割り当てられた数値                                           |
-    | point_name          | str      | 観測地点名                                                             |
-    | point_name_kana     | str      | 観測地点名 (カタカナ)                                                  |
-    | lat                 | float    | 緯度 (latitude)                                                        |
-    | lon                 | float    | 経度 (longitude)                                                       |
-    | elevation           | float    | 標高                                                                   |
-    | obs_areaipitation   | int      | 降水量の観測をしているか                                             |
-    | obs_temperature     | int      | 気温の観測をしているか                                               |
-    | obs_humidity        | int      | 湿度の観測をしているか                                               |
+    |      カラム名       |    型    |                                意味                                 |
+    | ------------------- | -------- | ------------------------------------------------------------------- |
+    | symbol              | str      | "s" or "a", 大きい都市だと"s"になる？                               |
+    | prec_num            | int      | 観測地点が属する都道府県に割り当てられた数値                        |
+    | point_num           | int      | 観測地点に割り当てられた数値                                        |
+    | point_name          | str      | 観測地点名                                                          |
+    | point_name_kana     | str      | 観測地点名 (カタカナ)                                               |
+    | lat                 | float    | 緯度 (latitude)                                                     |
+    | lon                 | float    | 経度 (longitude)                                                    |
+    | elevation           | float    | 標高                                                                |
+    | obs_areaipitation   | int      | 降水量の観測をしているか                                            |
+    | obs_temperature     | int      | 気温の観測をしているか                                              |
+    | obs_humidity        | int      | 湿度の観測をしているか                                              |
     | obs_wind            | int      | 風の観測をしているか （0,1に加え、2の場合があるが違いは分からない） |
-    | obs_sunshine        | int      | 日照時間の観測をしているか                                           |
-    | obs_snowfall        | int      | 降雪量の観測をしているか                                             |
-    | obs_from            | datetime | 観測開始日. 入力されていない場合も多い                                 |
-    | name_change_history | str      | 地域名が変わったことがあるか                                           |
-    |                       |          |                                                                        |
+    | obs_sunshine        | int      | 日照時間の観測をしているか                                          |
+    | obs_snowfall        | int      | 降雪量の観測をしているか                                            |
+    | obs_from            | datetime | 観測開始日. 入力されていない場合も多い                              |
+    | name_change_history | str      | 地域名が変わったことがあるか                                        |
+    |                     |          |                                                                     |
 
 2. `weather_point~~~.csv`  
   ある観測地点の指定した期間の天気データをまとめたcsvファイルです。  
