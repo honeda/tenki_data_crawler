@@ -123,7 +123,7 @@ $ python main.py {開始日} {終了日} --area {観測エリア名}
    | wind_speed_max             | float    | 最大風速 [m/s]               |
    | dir_wind_speed_max         | str      | 最大風速の風向き             |
    | max_instantenious_wind     | float    | 最大瞬間風速 [ms]            |
-   | dir_max_instantenious_wind | str      | 最大瞬間風速の風向き [ms]    |
+   | dir_max_instantenious_wind | str      | 最大瞬間風速の風向き         |
    | hour_of_sunshine           | float    | 日照時間 [hour]              |
    | snowfall                   | float    | 降雪量 [cm]                  |
    | deepest_snow               | float    | 最深積雪 [cm]                |
